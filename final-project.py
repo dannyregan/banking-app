@@ -252,6 +252,20 @@ class BankManager:
                     account.deposit(float(amount))
                     print(f"New balance: {account.get_balance():.2f}")
 
+            elif selection == '5':
+                print("Account to transfer from:")
+                accountFrom = self.promptForAccountNumberAndPIN(self.bank)
+                if accountFrom:
+                    print("Account to transfer to:")
+                    accountTo = self.promptForAccountNumberAndPIN(self.bank)
+                    if accountTo:
+                        amount = BankUtility().promptUserForPositiveNumber("Enter amount to deposit in dollars and cents (e.g. 2.57): ")
+                        accountFrom.withdraw(float(amount))
+                        accountTo.deposit(float(amount))
+                        print("Transfer Complete")
+                        print(f"New balance in account {accountTo.get_account_num()}: ${accountFrom.get_balance():.2f}")
+                        print(f"New balance in account {accountTo.get_account_num()}: ${accountTo.get_balance():.2f}")
+
 
             elif selection == '11':
                 break
@@ -259,8 +273,9 @@ class BankManager:
                 print("Invalid selection.")
 
     def promptForAccountNumberAndPIN(self, bank):
-        accountNum = input("Enter an account number. ")
+        accountNum = input("Enter an account number: ")
         for account in bank.accounts:
+            print(str(account.get_account_num()))
             if str(account.get_account_num()) == accountNum:
                 pin = input("Input PIN: ")
                 if account.isValidPIN(pin):
@@ -270,8 +285,8 @@ class BankManager:
                 else:
                     print("Invalid PIN")
                     return False
-            print(f"Account not found for account number: {accountNum}")
-            return None
+        print(f"Account not found for account number: {accountNum}")
+        return None
 
 
 
