@@ -111,7 +111,9 @@ class Bank:
         return 'null'
 
     def addMonthlyInterest(percent):
-        # EXTRA CREDIT
+# =================================================
+# EXTRA CREDIT
+# =================================================
         return
 
 # class CoinCollector:
@@ -122,37 +124,47 @@ class Bank:
 #     #    implement parseChange here
 #         return 0
 
-# class BankUtility:
-#     def __init__(self):
-#         return
-#     def promptUserForString(prompt):
-#     # implement promptUserForString here
-#         return "" # be sure to change this
-#     def promptUserForPositiveNumber(prompt):
-#     # implement promptUserForPositiveNumber here
-#         return 0.0 # be sure to change this
-#     def generateRandomInteger(min, max):
-#     # implement generateRandomInteger here
-#         return 0 # be sure to change as needed
-#     def convertFromDollarsToCents(amount):
-#     # implement convertFromDollarsToCents here
-#         return 0 # be sure to change as needed
-#     '''
-#     Checks if a given string is a number (long)
-#     This does NOT handle decimals.
-#     YOU DO NOT NEED TO CHANGE THIS METHOD
-#     THIS IS FREE FOR YOU TO USE AS NEEDED
-#     @param numberToCheck String to check
-#     @return true if the String is a number, false otherwise
-#     '''
-#     def isNumeric(numberToCheck):
-#         try:
-#             if numberToCheck.isdigit():
-#                 return True
-#             else:
-#                 return False
-#         except ValueError:
-#             return False
+class BankUtility:
+    def __init__(self):
+        return
+
+    def promptUserForString(self, prompt):
+        response = input(prompt)
+        return f'{response}'
+
+    def promptUserForPositiveNumber(self, prompt):
+        while True:
+            response = input(prompt)
+            try:
+                if int(response) > 0:
+                    return response
+                if int(response) <= 0:
+                    print("Amount cannot be 0 or negative. Try again.")
+            except:
+                print('Please enter a positive number.')
+
+    def generateRandomInteger(min, max):
+    # implement generateRandomInteger here
+        return 0 # be sure to change as needed
+    def convertFromDollarsToCents(amount):
+    # implement convertFromDollarsToCents here
+        return 0 # be sure to change as needed
+    '''
+    Checks if a given string is a number (long)
+    This does NOT handle decimals.
+    YOU DO NOT NEED TO CHANGE THIS METHOD
+    THIS IS FREE FOR YOU TO USE AS NEEDED
+    @param numberToCheck String to check
+    @return true if the String is a number, false otherwise
+    '''
+    def isNumeric(self, numberToCheck):
+        try:
+            if numberToCheck.isdigit():
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
 
 # class BankManager:
 #     def __init__(self):
@@ -175,9 +187,8 @@ test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 test2 = Account(123456780, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 bank = Bank()
 
-bank.addAccountToBank(test)
-bank.addAccountToBank(test2)
+BankUtility().promptUserForPositiveNumber("enter a number")
 
-bank.findAccount(123456780)
-# bank.removeAccountFromBank(test2)
-# bank.findAccount(123456780)
+
+
+# prompt user for positive number not working.
