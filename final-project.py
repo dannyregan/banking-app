@@ -104,8 +104,12 @@ class Bank:
             if account.get_account_num == accountToRemove.get_account_num:
                 self.accounts.remove(accountToRemove)
 
-    def findAccount(accountNumber):
-        return # be sure to change this as needed
+    def findAccount(self, accountNumber):
+        for account in self.accounts:
+            if account.get_account_num() == accountNumber:
+                return account
+        return 'null'
+
     def addMonthlyInterest(percent):
         # EXTRA CREDIT
         return
@@ -169,10 +173,11 @@ class Bank:
 
 test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 test2 = Account(123456780, "Daniel", "Regan", "293-29-2913", "7689", 100000)
-test3 = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 bank = Bank()
+
 bank.addAccountToBank(test)
 bank.addAccountToBank(test2)
-print(bank.accounts)
-bank.removeAccountFromBank(test2)
-print(bank.accounts)
+
+bank.findAccount(123456780)
+# bank.removeAccountFromBank(test2)
+# bank.findAccount(123456780)
