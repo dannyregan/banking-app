@@ -2,7 +2,7 @@ import array
 import random
 
 class Account:
-    def __init__(self, account_num: int, first_name: str, last_name: str, social_security_num: str, pin: str, balance: int):
+    def __init__(self, account_num: int, first_name: str, last_name: str, social_security_num: str, pin: str, balance: int = 0):
         self._account_num = account_num
         self._first_name = first_name
         self._last_name = last_name
@@ -67,7 +67,7 @@ class Account:
         # all objects have a toString method - this indicates you are providing
         # your own version
 
-    def __repr__(self):
+    def toString(self):
         return f"""
         ===================================
         Account Number: {self._account_num}
@@ -75,7 +75,7 @@ class Account:
         Owner Last Name: {self._last_name}
         Owner SSN: XXX-XX-{self._social_security_num[-4:]}
         PIN: {self._pin}
-        Balance: ${self._balance}
+        Balance: ${self._balance / 100:.2f}
         ===================================
         """
 
@@ -93,6 +93,7 @@ class Bank:
     def addAccountToBank(self, account):
         if len(self.accounts) < self.MAX_NUM_OF_ACCOUNTS:
             self.accounts.append(account)
+            print(account.toString())
             print("The account was successfully added.")
             return True
         else:
@@ -115,6 +116,13 @@ class Bank:
 # EXTRA CREDIT
 # =================================================
         return
+
+    def checkAccountNum(self, accountNum):
+        for account in self.accounts:
+            if account.get_account_num() == accountNum:
+                return True
+            return False
+
 
 class CoinCollector:
     # constructor so you cannot instantiate this class
@@ -208,12 +216,18 @@ class BankManager:
             if selection == '1':
                 print("OPEN ACCOUNT")
                 firstName = input("Enter Account Owner's Fist Name: ")
-                print(firstName)
                 lastName = input("Enter Account Owner's Last Name: ")
-                print(lastName)
                 ssn = input("Enter Account Owner's SSN (9 digits): ")
-                print(ssn)
+                pin = BankUtility().generateRandomInteger(0,999)
+                pin = f"{pin:04d}"
 
+                accountNumCheck = True
+                while accountNumCheck:
+                    accountNum = BankUtility().generateRandomInteger(10000000,99999999)
+                    accountNumCheck = self.bank.checkAccountNum(accountNum)
+
+                account = Account(accountNum, firstName, lastName, ssn, pin)
+                self.bank.addAccountToBank(account)
             elif selection == '11':
                 break
             else:
@@ -246,12 +260,10 @@ class BankManager:
     #     return # be sure to change this as needed
 
 
-test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
-bank = Bank()
-bank.addAccountToBank(test)
 bankManager = BankManager()
+bankManager.main()
 
-bankManager.promptForAccountNumberAndPIN(bank)
+
 
 
 
