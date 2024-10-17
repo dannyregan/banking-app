@@ -146,9 +146,10 @@ class BankUtility:
     def generateRandomInteger(min, max):
     # implement generateRandomInteger here
         return 0 # be sure to change as needed
-    def convertFromDollarsToCents(amount):
-    # implement convertFromDollarsToCents here
-        return 0 # be sure to change as needed
+
+    def convertFromDollarsToCents(self, amount):
+        cents = round(amount * 100)
+        return cents
     '''
     Checks if a given string is a number (long)
     This does NOT handle decimals.
@@ -187,7 +188,7 @@ test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 test2 = Account(123456780, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 bank = Bank()
 
-BankUtility().promptUserForPositiveNumber("enter a number")
+print(BankUtility().convertFromDollarsToCents(100.92))
 
 
 
