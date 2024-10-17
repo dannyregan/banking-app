@@ -160,12 +160,12 @@ class BankUtility:
         while True:
             response = input(prompt)
             try:
-                if int(response) > 0:
+                if float(response) > 0:
                     return response
-                if int(response) <= 0:
+                if float(response) <= 0:
                     print("Amount cannot be 0 or negative. Try again.")
             except:
-                print('Please enter a positive number.')
+                print('Please enter a number.')
 
     def generateRandomInteger(self, min, max):
         return random.randint(min, max)
@@ -228,6 +228,31 @@ class BankManager:
 
                 account = Account(accountNum, firstName, lastName, ssn, pin)
                 self.bank.addAccountToBank(account)
+
+            elif selection == '2':
+                account = self.promptForAccountNumberAndPIN(self.bank)
+                if account:
+                    print(account.toString())
+
+            elif selection == '3':
+                account = self.promptForAccountNumberAndPIN(self.bank)
+                if account:
+                    pin = input("Enter new PIN: ")
+                    if len(pin) == 4:
+                        pinCheck = input("Enter new PIN again to confirm: ")
+                        if pin == pinCheck:
+                            account.set_pin(pin)
+                            print("PIN updated")
+                    else: print("PIN must be four digits long")
+
+            elif selection == '4':
+                account = self.promptForAccountNumberAndPIN(self.bank)
+                if account:
+                    amount = BankUtility().promptUserForPositiveNumber("Enter amount to deposit in dollars and cents (e.g. 2.57): ")
+                    account.deposit(float(amount))
+                    print(f"New balance: {account.get_balance():.2f}")
+
+
             elif selection == '11':
                 break
             else:
@@ -244,7 +269,7 @@ class BankManager:
                 #     return account
                 else:
                     print("Invalid PIN")
-                    return None
+                    return False
             print(f"Account not found for account number: {accountNum}")
             return None
 
