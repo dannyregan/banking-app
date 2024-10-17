@@ -116,13 +116,29 @@ class Bank:
 # =================================================
         return
 
-# class CoinCollector:
-#     # constructor so you cannot instantiate this class
-#     def __init__(self):
-#         return 
-#     def parseChange(coins):
-#     #    implement parseChange here
-#         return 0
+class CoinCollector:
+    # constructor so you cannot instantiate this class
+    def __init__(self):
+        return 
+
+    def parseChange(self, coins):
+        total = 0
+        coins = coins.upper()
+        coins = list(coins)
+        for coin in coins:
+            if coin == 'P':
+                total += 1
+            if coin == 'N':
+                total += 5
+            if coin == 'D':
+                total += 10
+            if coin == 'Q':
+                total += 25
+            if coin == 'H':
+                total += 50
+            if coin == 'W':
+                total += 100
+        return total
 
 class BankUtility:
     def __init__(self):
@@ -143,9 +159,8 @@ class BankUtility:
             except:
                 print('Please enter a positive number.')
 
-    def generateRandomInteger(min, max):
-    # implement generateRandomInteger here
-        return 0 # be sure to change as needed
+    def generateRandomInteger(self, min, max):
+        return random.randint(min, max)
 
     def convertFromDollarsToCents(self, amount):
         cents = round(amount * 100)
@@ -167,29 +182,76 @@ class BankUtility:
         except ValueError:
             return False
 
-# class BankManager:
-#     def __init__(self):
-#         return
-#     # This is where you will implement your method and start
-#     # the program from. The BankManager class should create an instance
-#     # of a Bank object when the program runs and use that instance to
-#     # manage the Accounts in the bank
-#     @staticmethod
-#     def promptForAccountNumberAndPIN(bank):
-#     # implement promptForAccountNumberAndPIN here
-#     # takes one parameter, a Bank object that represents the bank.
-#     # The method should prompt the user to enter an accountnumber
-#     # and then try to find a matching account with that account number
-#     # in the bank.
-#         return # be sure to change this as needed
+class BankManager:
+    def __init__(self):
+        self.bank = Bank()
+    
+    def main(self):
+        while True:
+            print("======================================")
+            print("What do you want to do?")
+            print("1. Open an account")
+            print("2. Get account information and balance")
+            print("3. Change PIN")
+            print("4. Deposit money in account")
+            print("5. Transfer money between accounts")
+            print("6. Withdraw money from account")
+            print("7. ATM withdrawal")
+            print("8. Deposit change")
+            print("9. Close an account")
+            print("10. Add monthly interest to all accounts")
+            print("11. End Program")
+            print("======================================")
+
+            selection = input("Select an option: ")
+
+            if selection == '1':
+                print("OPEN ACCOUNT")
+                firstName = input("Enter Account Owner's Fist Name: ")
+                print(firstName)
+                lastName = input("Enter Account Owner's Last Name: ")
+                print(lastName)
+                ssn = input("Enter Account Owner's SSN (9 digits): ")
+                print(ssn)
+
+            elif selection == '11':
+                break
+            else:
+                print("Invalid selection.")
+
+    def promptForAccountNumberAndPIN(self, bank):
+        accountNum = input("Enter an account number. ")
+        for account in bank.accounts:
+            if str(account.get_account_num()) == accountNum:
+                pin = input("Input PIN: ")
+                if account.isValidPIN(pin):
+                    return account
+                # if pin == account.get_pin():
+                #     return account
+                else:
+                    print("Invalid PIN")
+                    return None
+            print(f"Account not found for account number: {accountNum}")
+            return None
+
+
+
+    # @staticmethod
+    # def promptForAccountNumberAndPIN(bank):
+    # # implement promptForAccountNumberAndPIN here
+    # # takes one parameter, a Bank object that represents the bank.
+    # # The method should prompt the user to enter an accountnumber
+    # # and then try to find a matching account with that account number
+    # # in the bank.
+    #     return # be sure to change this as needed
 
 
 test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
-test2 = Account(123456780, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 bank = Bank()
+bank.addAccountToBank(test)
+bankManager = BankManager()
 
-print(BankUtility().convertFromDollarsToCents(100.92))
+bankManager.promptForAccountNumberAndPIN(bank)
 
 
 
-# prompt user for positive number not working.
