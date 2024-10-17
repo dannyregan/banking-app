@@ -99,9 +99,11 @@ class Bank:
             print("No more accounts available.")
             return False
 
-    def removeAccountFromBank(account):
-        # implement removeAccountFromBank here
-        return False; # be sure to change this as needed
+    def removeAccountFromBank(self, accountToRemove):
+        for account in self.accounts:
+            if account.get_account_num == accountToRemove.get_account_num:
+                self.accounts.remove(accountToRemove)
+
     def findAccount(accountNumber):
         return # be sure to change this as needed
     def addMonthlyInterest(percent):
@@ -166,10 +168,11 @@ class Bank:
 
 
 test = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
-test2 = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
+test2 = Account(123456780, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 test3 = Account(123456789, "Daniel", "Regan", "293-29-2913", "7689", 100000)
 bank = Bank()
 bank.addAccountToBank(test)
 bank.addAccountToBank(test2)
-bank.addAccountToBank(test3)
-print(repr(test))
+print(bank.accounts)
+bank.removeAccountFromBank(test2)
+print(bank.accounts)
