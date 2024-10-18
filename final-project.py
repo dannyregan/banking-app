@@ -265,6 +265,14 @@ class BankManager:
                         print("Transfer Complete")
                         print(f"New balance in account {accountTo.get_account_num()}: ${accountFrom.get_balance():.2f}")
                         print(f"New balance in account {accountTo.get_account_num()}: ${accountTo.get_balance():.2f}")
+                    
+            elif selection == '6':
+                print("Account to transfer from:")
+                account = self.promptForAccountNumberAndPIN(self.bank)
+                if account:
+                    amount = BankUtility().promptUserForPositiveNumber("Enter amount to withdraw in dollars and cents (e.g. 2.57): ")
+                    account.withdraw(float(amount))
+                    print(f"New balance: ${account.get_balance():.2f}")
 
 
             elif selection == '11':
