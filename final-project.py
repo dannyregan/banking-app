@@ -1,5 +1,6 @@
-import array
+import math
 import random
+
 
 class Account:
     def __init__(self, account_num: int, first_name: str, last_name: str, social_security_num: str, pin: str, balance: int = 0):
@@ -109,7 +110,7 @@ class Bank:
         for account in self.accounts:
             if account.get_account_num() == accountNumber:
                 return account
-        return 'null'
+        return None
 
     def addMonthlyInterest(percent):
 # =================================================
@@ -173,6 +174,10 @@ class BankUtility:
     def convertFromDollarsToCents(self, amount):
         cents = round(amount * 100)
         return cents
+
+    def numOfBills(self, amount, bill):
+        numOfBills = math.floor(amount / bill)
+        return numOfBills
     '''
     Checks if a given string is a number (long)
     This does NOT handle decimals.
@@ -267,12 +272,35 @@ class BankManager:
                         print(f"New balance in account {accountTo.get_account_num()}: ${accountTo.get_balance():.2f}")
                     
             elif selection == '6':
-                print("Account to transfer from:")
                 account = self.promptForAccountNumberAndPIN(self.bank)
                 if account:
                     amount = BankUtility().promptUserForPositiveNumber("Enter amount to withdraw in dollars and cents (e.g. 2.57): ")
                     account.withdraw(float(amount))
                     print(f"New balance: ${account.get_balance():.2f}")
+
+            elif selection == '7':
+                account = self.promptForAccountNumberAndPIN(self.bank)
+                if account:
+                    amount = float(BankUtility().promptUserForPositiveNumber("Enter amount to withdraw in dollars and cents (e.g. 2.57): "))
+                    if amount % 5 == 0:
+                        if 5 <= amount <= 1000:
+                            account.withdraw(amount)
+                            twenties = BankUtility().numOfBills(amount, 20)
+                            amount -= twenties * 20
+                            tens = BankUtility().numOfBills(amount, 10)
+                            amount -= tens * 10
+                            fives = BankUtility().numOfBills(amount, 5)
+                            print(f"Number of 20-dollar bills: {twenties}")
+                            print(f"Number of 10-dollar bills: {tens}")
+                            print(f"Number of 5-dollar bills: {fives}")
+                            print(f"New balance: ${account.get_balance():.2f}")
+                        else:
+                            print("Invalid amount. Try again.")
+                    else:
+                        print("Invalid amount. Try again.")
+
+
+                    
 
 
             elif selection == '11':
@@ -283,7 +311,7 @@ class BankManager:
     def promptForAccountNumberAndPIN(self, bank):
         accountNum = input("Enter an account number: ")
         for account in bank.accounts:
-            print(str(account.get_account_num()))
+            # print(str(account.get_account_num()))
             if str(account.get_account_num()) == accountNum:
                 pin = input("Input PIN: ")
                 if account.isValidPIN(pin):
@@ -310,8 +338,4 @@ class BankManager:
 
 bankManager = BankManager()
 bankManager.main()
-
-
-
-
 
